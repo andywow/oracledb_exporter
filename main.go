@@ -11,6 +11,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+
 	//Required for debugging
 	//_ "net/http/pprof"
 
@@ -41,7 +42,7 @@ const (
 	exporter  = "exporter"
 )
 
-// Metrics object description
+// Metric object description
 type Metric struct {
 	Context          string
 	Labels           []string
