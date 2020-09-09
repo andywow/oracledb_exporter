@@ -11,7 +11,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-
 	//Required for debugging
 	//_ "net/http/pprof"
 
@@ -241,7 +240,7 @@ func (e *Exporter) scrape(ch chan<- prometheus.Metric) {
 
 			if err = ScrapeMetric(e.db, ch, metric); err != nil {
 				log.Errorln("Error scraping for", metric.Context, "_", metric.MetricsDesc, ":", err)
-				e.scrapeErrors.WithLabelValues(metric.Context, err).Inc()
+				e.scrapeErrors.WithLabelValues(metric.Context, err.Error()).Inc()
 			} else {
 				log.Debugln("Successfully scrapped metric: ", metric.Context)
 			}
