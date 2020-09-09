@@ -10,7 +10,8 @@ deploy:
   provider: releases
   api_key:
     secure: igqjh1RpcPL1fyu2iIVx8Fl8C0wjaOMt6ypO6o0aafDGDI2JJ3g2lt8FWzbjCPp3/TBHvzR2N841ITIW/2JWQV2JaGmVNpE0yt7HSLMuFMcWBWi/7WHffkzmutluAqL7tvb+d/cFB9kaL/oV9kw3YQlWVO/SZV5tC5qS6I8CAaoJbOkRml4un4aejeBO39g+amSrBR6c7wr9DAWzoE/m8dL0WUmRISRizuiGQBXPvMOxnAnPcE9asSlv9YccAEV4xuKsPgJBb+407nLBlwNiiA9f0xhIQU34Q43DZz0VZ8skk+cc8CaePAVsc0hfkeH7CnQJjGOkqEzxDpPYAYxoKREarDngAyjGaX2d+iDjh8GLO3bSTzK7OFvh2CGtBMp0h9aaIFzbnHy+5DjHcf4TRH8n4vkOs0pjqryhTuUe6+8Sl9p7Lfte+3OVQhe7ud3a/IJ1OXxImKrJZSplAYjJaZgaB9Au5K5AjYSjnM1YGhJmPtpu6ivLR8oXC/eJiwpx+/cwajW86/o6gmY/6P3uk1PYBEkfXARX5v80CmGQve0KnLDIyfuX19nZawSO93fPvgnIKZ72kkznpSaTmDlejMArXJRik6id5R8GFTrQ0qJSF+OuBtABTTFmioFhrRtqGKG19PL06aaMLpxSezSsDNIMZYbk4SK0mC+4in3dYXE=
-  file: "./dist/oracledb_exporter.*.tar.gz"
+  file_glob: true
+  file: './dist/oracledb_exporter.*.tar.gz'
   on:
     repo: andywow/oracledb_exporter
     tags: true
