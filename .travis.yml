@@ -1,7 +1,7 @@
 language: go
 sudo: required
 go:
-  - "1.14"
+  - "1.15"
 services:
   - docker
 install: true
@@ -14,12 +14,5 @@ deploy:
   file_glob: true
   file: "./dist/oracledb_exporter.*.tar.gz"
   on:
-    repo: iamseth/oracledb_exporter
+    repo: andywow/oracledb_exporter
     tags: true
-
-after_success:
-  docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"           &&
-  docker push iamseth/oracledb_exporter:${TRAVIS_TAG:-latest}        &&
-  docker push iamseth/oracledb_exporter:latest                       &&
-  docker push iamseth/oracledb_exporter:${TRAVIS_TAG:-latest}-alpine &&
-  docker push iamseth/oracledb_exporter:alpine
