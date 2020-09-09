@@ -4,25 +4,22 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+	//Required for debugging
+	//_ "net/http/pprof"
 
 	"github.com/BurntSushi/toml"
-
 	_ "github.com/mattn/go-oci8"
-
-	"fmt"
-
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/log"
 	"gopkg.in/alecthomas/kingpin.v2"
-	//Required for debugging
-	//_ "net/http/pprof"
 )
 
 var (
@@ -212,16 +209,16 @@ func (e *Exporter) scrape(ch chan<- prometheus.Metric) {
 		log.Debugln("Successfully pinged Oracle database: ")
 		e.up.Set(1)
 	}
-	
+
 	wg := sync.WaitGroup{}
 
 	for _, metric := range metricsToScrap.Metric {
 		wg.Add(1)
-		metric := metric  //https://golang.org/doc/faq#closures_and_goroutines
-		
+		metric := metric //https://golang.org/doc/faq#closures_and_goroutines
+
 		go func() {
 			defer wg.Done()
-			
+
 			log.Debugln("About to scrape metric: ")
 			log.Debugln("- Metric MetricsDesc: ", metric.MetricsDesc)
 			log.Debugln("- Metric Context: ", metric.Context)
