@@ -128,7 +128,7 @@ func NewExporter(dsn string) *Exporter {
 			Subsystem: exporter,
 			Name:      "scrape_errors_total",
 			Help:      "Total number of times an error occured scraping a Oracle database.",
-		}, []string{"collector"}),
+		}, []string{"collector", "code"}),
 		error: prometheus.NewGauge(prometheus.GaugeOpts{
 			Namespace: namespace,
 			Subsystem: exporter,
@@ -241,7 +241,7 @@ func (e *Exporter) scrape(ch chan<- prometheus.Metric) {
 
 			if err = ScrapeMetric(e.db, ch, metric); err != nil {
 				log.Errorln("Error scraping for", metric.Context, "_", metric.MetricsDesc, ":", err)
-				e.scrapeErrors.WithLabelValues(metric.Context).Inc()
+				e.scrapeErrors.WithLabelValues(metric.Context, err).Inc()
 			} else {
 				log.Debugln("Successfully scrapped metric: ", metric.Context)
 			}
