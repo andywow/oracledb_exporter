@@ -231,12 +231,12 @@ func (e *Exporter) scrape(ch chan<- prometheus.Metric) {
 
 			if len(metric.Request) == 0 {
 				log.Errorln("Error scraping for ", metric.MetricsDesc, ". Did you forget to define request in your toml file?")
-				continue
+				return
 			}
 
 			if len(metric.MetricsDesc) == 0 {
 				log.Errorln("Error scraping for query", metric.Request, ". Did you forget to define metricsdesc  in your toml file?")
-				continue
+				return
 			}
 
 			if err = ScrapeMetric(e.db, ch, metric); err != nil {
