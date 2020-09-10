@@ -11,6 +11,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+
 	//Required for debugging
 	//_ "net/http/pprof"
 
@@ -230,17 +231,21 @@ func (e *Exporter) scrape(ch chan<- prometheus.Metric) {
 
 			if len(metric.Request) == 0 {
 				log.Errorln("Error scraping for ", metric.MetricsDesc, ". Did you forget to define request in your toml file?")
-				return
+				continue
 			}
 
 			if len(metric.MetricsDesc) == 0 {
 				log.Errorln("Error scraping for query", metric.Request, ". Did you forget to define metricsdesc  in your toml file?")
-				return
+				continue
 			}
 
 			if err = ScrapeMetric(e.db, ch, metric); err != nil {
 				log.Errorln("Error scraping for", metric.Context, "_", metric.MetricsDesc, ":", err)
-				e.scrapeErrors.WithLabelValues(metric.Context, err.Error()).Inc()
+				if err != nil {
+					e.scrapeErrors.WithLabelValues(metric.Context, err.Error()).Inc()
+				} else {
+					e.scrapeErrors.WithLabelValues(metric.Context, "empty error").Inc()
+				}
 			} else {
 				log.Debugln("Successfully scrapped metric: ", metric.Context)
 			}
