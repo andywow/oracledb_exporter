@@ -1,7 +1,7 @@
 language: go
 sudo: required
 go:
-- '1.15'
+- '1.14'
 services:
 - docker
 install: true
