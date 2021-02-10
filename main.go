@@ -138,7 +138,7 @@ func NewExporter(dsn string) *Exporter {
 			Subsystem: exporter,
 			Name:      "scrape_errors_total",
 			Help:      "Total number of times an error occured scraping a Oracle database.",
-		}, []string{"collector"}),
+		}, []string{"collector", "code"}),
 		error: prometheus.NewGauge(prometheus.GaugeOpts{
 			Namespace: namespace,
 			Subsystem: exporter,
